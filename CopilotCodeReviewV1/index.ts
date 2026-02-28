@@ -146,6 +146,10 @@ async function run(): Promise<void> {
         // Get optional inputs
         let pullRequestId = tl.getInput('pullRequestId');
         const timeoutMinutes = parseInt(tl.getInput('timeout') || '15', 10);
+        if (isNaN(timeoutMinutes) || timeoutMinutes <= 0) {
+            tl.setResult(tl.TaskResult.Failed, 'Timeout must be a positive integer (minutes).');
+            return;
+        }
         const model = tl.getInput('model');
         const promptFile = tl.getInput('promptFile');
         const prompt = tl.getInput('prompt');
@@ -325,7 +329,7 @@ async function run(): Promise<void> {
             console.log('Using default prompt.');
         }
 
-        // Copy the Add-AzureDevOpsPRComment.ps1 and Add-AzureDevOpsPRComment.ps1 script to the working directory
+        // Copy the Add-AzureDevOpsPRComment.ps1 and Add-CopilotComment.ps1 script to the working directory
         // so Copilot can find and use them for posting PR comments
         const addCommentScriptSource = path.join(scriptsDir, 'Add-AzureDevOpsPRComment.ps1');
         const commentScriptSource = path.join(scriptsDir, 'Add-CopilotComment.ps1');
@@ -495,4 +499,7 @@ async function runCopilotCli(promptFilePath: string, model: string | undefined, 
     });
 }
 
-run();
+run().catch((err: unknown) => {
+    const errorMessage = err instanceof Error ? err.message : String(err);
+    tl.setResult(tl.TaskResult.Failed, `Unhandled error: ${errorMessage}`);
+});

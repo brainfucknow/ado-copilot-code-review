@@ -14,11 +14,11 @@ If you determine that you need to leave a new PR comment, perform the following 
 
 For file-specific feedback, use inline comments by providing the `-FilePath` and `-StartLine` parameters. You may also provide `-EndLine` for multi-line comments (defaults to `-StartLine` if omitted). Line numbers should reference the current (changed) version of the file, not the original. Example:
 
-.\scripts\Add-CopilotComment.ps1 -Comment $comment -Status 'Active' -FilePath '/src/MyProject/Program.cs' -StartLine 42 -EndLine 45
+.\Add-CopilotComment.ps1 -Comment $comment -Status 'Active' -FilePath '/src/MyProject/Program.cs' -StartLine 42 -EndLine 45
 
 For general PR-level feedback that is not specific to a file or line, omit the file parameters:
 
-.\scripts\Add-CopilotComment.ps1 -Comment $comment -Status 'Closed'
+.\Add-CopilotComment.ps1 -Comment $comment -Status 'Closed'
 
 Notes:
 - Use the status value 'Closed' for all positive feedback or when the PR requires no further action (i.e. approved, no issues found).
