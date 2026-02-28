@@ -147,6 +147,7 @@ async function run(): Promise<void> {
         let pullRequestId = tl.getInput('pullRequestId');
         const timeoutMinutes = parseInt(tl.getInput('timeout') || '15', 10);
         const model = tl.getInput('model');
+        const persona = tl.getInput('persona') || 'default';
         const promptFile = tl.getInput('promptFile');
         const prompt = tl.getInput('prompt');
         const promptRaw = tl.getInput('promptRaw');
@@ -320,9 +321,14 @@ async function run(): Promise<void> {
             fs.writeFileSync(promptFilePath, mergedPrompt, 'utf8');
             console.log('Custom prompt merged with instruction template.');
         } else if (!promptRaw && !isPromptFileRawSet) {
-            // Use default prompt file bundled with the task
-            promptFilePath = path.join(scriptsDir, 'prompt.txt');
-            console.log('Using default prompt.');
+            // Use persona-based prompt file bundled with the task
+            if (persona === 'grumpy') {
+                promptFilePath = path.join(scriptsDir, 'prompt-grumpy.txt');
+                console.log('Using grumpy senior developer persona prompt.');
+            } else {
+                promptFilePath = path.join(scriptsDir, 'prompt.txt');
+                console.log('Using default prompt.');
+            }
         }
 
         // Copy the Add-AzureDevOpsPRComment.ps1 and Add-AzureDevOpsPRComment.ps1 script to the working directory

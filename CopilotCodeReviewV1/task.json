@@ -134,6 +134,18 @@
             "helpMarkDown": "Optional. Path to a file containing a raw prompt to pass directly to the Copilot CLI with no modification. Cannot be combined with other prompt inputs (prompt, promptFile, promptRaw)."
         },
         {
+            "name": "persona",
+            "type": "pickList",
+            "label": "Review Persona",
+            "required": false,
+            "defaultValue": "default",
+            "helpMarkDown": "Optional. The review persona for Copilot to adopt. 'default' uses the standard senior engineer persona. 'grumpy' uses a grumpy senior developer with 40+ years of experience who is sarcastic but thorough.",
+            "options": {
+                "default": "Default",
+                "grumpy": "Grumpy Senior Developer"
+            }
+        },
+        {
             "name": "authors",
             "type": "string",
             "label": "Author Filter",
